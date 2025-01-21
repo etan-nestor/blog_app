@@ -1,0 +1,5 @@
+/* Appliquer du style aux inputs */
+input:focus{
+    outline: none;
+}
+

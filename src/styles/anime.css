@@ -1,0 +1,19 @@
+/* Animation pour HeaderContent */
+
+@keyframes bounce-moderate {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.animate-bounce-moderate {
+    animation: bounce-moderate 1s ease-in-out infinite;
+}
