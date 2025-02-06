@@ -9,9 +9,19 @@ const NavbarAuth = () => {
     const [theme, setTheme] = useState('light');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [usernameInitial, setUsernameInitial] = useState('');
     const menuRef = useRef(null);
 
+
     const navigate = useNavigate();
+
+    // Récupérer le nom d'utilisateur du localStorage
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            setUsernameInitial(user.username.charAt(0).toUpperCase());
+        }
+    }, []);
 
     useEffect(() => {
         if (theme === 'system') {
@@ -40,32 +50,25 @@ const NavbarAuth = () => {
     };
 
     return (
-        <nav className="fixed top-0 w-full p-2 bg-[#071738] border-b border-white z-50">
+        <nav className="fixed top-0 w-full p-3 bg-[#071738] border-b border-white z-50">
             <div className="flex justify-between items-center px-4">
                 {/* Logo */}
-                <div className="flex items-center">
+                <div className="flex items-center gap-[8rem]">
                     <img
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate('/home')}
                         className="cursor-pointer w-[100px]"
                         src={Logo}
                         alt="Logo"
                     />
-                </div>
-
-                {/* Menu central */}
-                <div className="hidden md:flex items-center space-x-6">
-                    <a href="#home" className="text-md font-semibold text-white hover:text-gray-400">
-                        HOME
-                    </a>
-                    <a href="#about" className="text-md font-semibold text-white hover:text-gray-400">
-                        ABOUT
-                    </a>
-                    <a href="#posts" className="text-md font-semibold text-white hover:text-gray-400">
-                        POSTS
-                    </a>
-                    <a href="#resources" className="text-md font-semibold text-white hover:text-gray-400">
-                        RESOURCES
-                    </a>
+                    {/* Menu central */}
+                    <div className="hidden md:flex items-center space-x-6">
+                        <a onClick={() => navigate('/home')} className="cursor-pointer text-md font-semibold text-white hover:text-gray-400">
+                            ACCUEIL
+                        </a>
+                        <a onClick={() => navigate('/posts')} className="cursor-pointer text-md font-semibold text-white hover:text-gray-400">
+                            ARTICLES
+                        </a>
+                    </div>
                 </div>
 
                 {/* Actions à droite */}
@@ -89,11 +92,9 @@ const NavbarAuth = () => {
                         className="text-white hover:text-gray-400"
                         onClick={() => navigate('/profile')}
                     >
-                        <img
-                            src="https://via.placeholder.com/30"
-                            alt="User Avatar"
-                            className="rounded-full w-6 h-6"
-                        />
+                        <div className="bg-orange-600 w-8 h-8 p-1 rounded-full">
+                        {usernameInitial || 'U'}
+                        </div>
                     </button>
                     {/* Bouton thème */}
                     <button

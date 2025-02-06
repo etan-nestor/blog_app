@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
+import { useNavigate } from "react-router-dom";
 import { FaRegCommentDots, FaRegHeart, FaShareAlt } from "react-icons/fa";
 
 const PostCard = ({
+    id,
     image,
     title,
     date,
@@ -10,12 +12,25 @@ const PostCard = ({
     likes,
     shares
 }) => {
+    const navigate = useNavigate();
+
+    const handleImageClick = () => {
+        if (!id) {
+            console.error("ID du post manquant !");
+            return;
+        }
+        navigate(`/post/${id}`);
+    };
     return (
         <div className="bg-[#3f4c69] w-[352px] h-[390px] rounded-[28px] p-4 shadow-md relative cursor-pointer">
             {/* Image Card */}
-            <div className="flex justify-center items-center bg-transparent w-[352px] h-[234px] rounded-[28px] border right-4 bottom-4 border-white shadow-lg relative">
+            <div className="flex justify-center items-center bg-transparent w-[352px] h-[234px] rounded-[28px] border right-4 bottom-4 border-white shadow-lg relative"
+                onClick={handleImageClick}
+                role="button"
+                aria-label={`Voir les détails de ${title}`}
+            >
                 <img
-                    src={image}
+                    src={`http://localhost:5000/${image}`}
                     alt={title}
                     className="w-[230px] h-[230px] object-fit cursor-pointer"
                 />

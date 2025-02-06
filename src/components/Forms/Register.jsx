@@ -38,7 +38,7 @@ const Register = () => {
                 loading: 'Saving...',
                 success: (response) => {
                     // Affiche un toast succès et redirige après un délai
-                    setTimeout(() => navigate('/home'), 2000);
+                    setTimeout(() => navigate('/signin'), 2000);
                     return response.data.message || 'Settings saved!';
                 },
                 error: (err) => {
