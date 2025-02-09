@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 // Configuration de l'URL de base de l'API depuis l'environnement
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://blogapi.up.railway.app/api';
 
 // Création d'une instance Axios avec des configurations par défaut
 const apiClient = axios.create({
