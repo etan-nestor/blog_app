@@ -9,6 +9,7 @@ import FooterAuth from "./components/Footer/FooterAuth";
 import WelcomeP from "./pages/WelcomeP";
 import About from "./pages/About";
 import Home from './pages/Home';
+import Profile from './pages/Profile';
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import ResetLink from "./pages/ResetLink";
@@ -16,6 +17,8 @@ import { PasswordReset } from "./pages/PasswordReset";
 import { PostsPage } from "./pages/PostsPage";
 import { DetailPost } from "./pages/DetailPost";
 import AddPosts from "./pages/AddPosts";
+import { Toaster } from 'react-hot-toast';
+
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -38,6 +41,10 @@ const Layout = ({ children }) => {
 const App = () => {
   return (
     <Router>
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+      />
       <AuthProvider>
         <Layout>
           <Routes>
@@ -62,7 +69,10 @@ const App = () => {
               path="/post/:id"
               element={<ProtectedRoute><DetailPost /></ProtectedRoute>}
             />
-
+            <Route
+              path="/profile"
+              element={<ProtectedRoute><Profile /></ProtectedRoute>}
+            />
 
             {/* for dev test */}
             <Route path="/post-add" element={<AddPosts />} />
