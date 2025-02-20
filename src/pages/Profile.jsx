@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 import { FaEdit, FaUserCircle, FaSignOutAlt, FaTrashAlt } from 'react-icons/fa';
 import apiClient from '../api/apiAxiosConfig';
 import { useNavigate } from 'react-router-dom';
@@ -7,27 +8,19 @@ import { useNavigate } from 'react-router-dom';
 const Profile = () => {
     const [profileData, setProfileData] = useState({
         username: '',
-        firstName: '',
-        lastName: '',
+        nom: '',
+        prenom: '',
         email: '',
         phone: '',
         photo: null,
     });
 
-    const navigate = useNavigate()
-
-
-    const [interactions, setInteractions] = useState({
-        likedPosts: [],
-        commentedPosts: [],
-        sharedPosts: [],
-    });
-
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [photoPreview, setPhotoPreview] = useState(null);
 
-    // Charger les données utilisateur et interactions
+    // Charger les données utilisateur
     useEffect(() => {
         const fetchProfileData = async () => {
             try {
@@ -42,32 +35,13 @@ const Profile = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                const likedRes = await apiClient.get('/posts/liked', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                const commentedRes = await apiClient.get('/posts/commented', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                const sharedRes = await apiClient.get('/posts/shared', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
 
                 setProfileData(profileRes.data);
-                setInteractions({
-                    likedPosts: likedRes.data.likedPosts,
-                    commentedPosts: commentedRes.data.commentedPosts,
-                    sharedPosts: sharedRes.data.sharedPosts,
-                });
 
             } catch (err) {
                 console.error("Erreur API:", err.response ? err.response.data : err.message);
-                setError("Erreur lors du chargement des données");
+                setError(err.response ? err.response.data : "Erreur lors du chargement des données");
+
             } finally {
                 setLoading(false);
             }
@@ -85,32 +59,58 @@ const Profile = () => {
     // Gérer l'upload de la photo de profil
     const handlePhotoChange = (e) => {
         const file = e.target.files[0];
-        if (file) {
+        if (file && file.type.startsWith('image/')) {
             setProfileData({ ...profileData, photo: file });
             setPhotoPreview(URL.createObjectURL(file)); // Prévisualisation
+        } else {
+            alert('Veuillez télécharger une image valide.');
         }
     };
 
     // Envoyer les modifications à l'API
+    // Envoyer les modifications à l'API
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Vérification des champs obligatoires : ici on ne vérifie plus que tous les champs soient remplis
+        if (!profileData.username && !profileData.nom && !profileData.prenom) {
+            toast.error('Veuillez remplir au moins un champ');
+            return;
+        }
+
         try {
-            const formData = new FormData();
-            formData.append('username', profileData.username);
-            formData.append('firstName', profileData.firstName);
-            formData.append('lastName', profileData.lastName);
-            formData.append('email', profileData.email);
-            formData.append('phone', profileData.phone);
-            if (profileData.photo) {
-                formData.append('photo', profileData.photo);
+            const token = localStorage.getItem('token');
+            if (!token) {
+                toast.error("Vous devez être connecté !");
+                return;
             }
 
-            await apiClient.put('/users/update-profile', formData);
-            alert('Profil mis à jour avec succès !');
+            const updatedData = new FormData();
+            if (profileData.username) updatedData.append('username', profileData.username);
+            if (profileData.nom) updatedData.append('nom', profileData.nom);
+            if (profileData.prenom) updatedData.append('prenom', profileData.prenom);
+            if (profileData.phone) updatedData.append('phone', profileData.phone);
+            if (profileData.photo) updatedData.append('photo', profileData.photo);
+
+            const response = await apiClient.put('/users/profile-updated', updatedData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            // Mettre à jour les données dans le localStorage
+            const updatedUser = { ...profileData, photo: profileData.photo ? URL.createObjectURL(profileData.photo) : null };
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+            
+            if (response.data.message) {
+                toast.success('Profil mis à jour avec succès !');
+            }
         } catch (err) {
-            alert('Erreur lors de la mise à jour du profil');
+            console.error("Erreur lors de la mise à jour du profil", err);
+            toast.error(`Erreur lors de la mise à jour du profil : ${err.response ? err.response.data.message : err.message}`);
         }
     };
+
 
     // Déconnexion
     const handleSignOut = () => {
@@ -118,7 +118,7 @@ const Profile = () => {
         // Rediriger vers la page de connexion
         navigate('/login');
     };
-    
+
     // Suppression du compte
     const handleDeleteAccount = async () => {
         try {
@@ -162,19 +162,52 @@ const Profile = () => {
                                     <input
                                         type="text"
                                         name="username"
-                                        value={profileData.username}
+                                        value={profileData.username || ""}
                                         onChange={handleInputChange}
-                                        className="border p-2 rounded-md w-full text-gray-700"
+                                        className="border p-2 rounded-md w-full text-gray-800"
                                         placeholder="Nom d'utilisateur"
                                     />
                                 </div>
-                                <input type="text" name="firstName" value={profileData.firstName} onChange={handleInputChange} className="border p-2 rounded-md w-full" placeholder="Prénom" />
-                                <input type="text" name="lastName" value={profileData.lastName} onChange={handleInputChange} className="border p-2 rounded-md w-full" placeholder="Nom" />
-                                <input type="email" name="email" value={profileData.email} onChange={handleInputChange} className="border p-2 rounded-md w-full" placeholder="Email" />
-                                <input type="tel" name="phone" value={profileData.phone} onChange={handleInputChange} className="border p-2 rounded-md w-full" placeholder="Téléphone" />
+                                <input
+                                    type="text"
+                                    name="prenom"
+                                    value={profileData.prenom || ""}
+                                    onChange={handleInputChange}
+                                    className="border p-2 rounded-md w-full text-gray-800"
+                                    placeholder="Prénom"
+                                />
+                                <input
+                                    type="text"
+                                    name="nom"
+                                    value={profileData.nom || ""}
+                                    onChange={handleInputChange}
+                                    className="border p-2 rounded-md w-full text-gray-800"
+                                    placeholder="Nom"
+                                />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={profileData.email || ""}
+                                    onChange={handleInputChange}
+                                    className="border p-2 rounded-md w-full font-bold text-orange-600"
+                                    placeholder="Email"
+                                    readOnly
+                                />
+                                <input
+                                    type="tel"
+                                    name="phone"
+                                    value={profileData.phone || ""}
+                                    onChange={handleInputChange}
+                                    className="border p-2 rounded-md w-full text-gray-800"
+                                    placeholder="Téléphone"
+                                />
                                 <div className="flex justify-between items-center">
                                     <label className="text-gray-600">Photo de profil</label>
-                                    <input type="file" onChange={handlePhotoChange} className="border p-2 rounded-md" />
+                                    <input
+                                        type="file"
+                                        onChange={handlePhotoChange}
+                                        className="border p-2 rounded-md"
+                                    />
                                 </div>
                                 <button type="submit" className="mt-4 bg-blue-600 text-white py-2 px-6 rounded-md">
                                     <FaEdit className="inline mr-2" />
@@ -182,29 +215,6 @@ const Profile = () => {
                                 </button>
                             </div>
                         </form>
-                    </div>
-
-                    {/* Mes interactions */}
-                    <div className="bg-white p-6 rounded-lg shadow-lg border">
-                        <h2 className="text-xl font-semibold mb-4 text-gray-600">Mes interactions</h2>
-
-                        {/* Posts aimés */}
-                        <div className="mb-6">
-                            <h3 className="text-lg font-semibold mb-2">Posts aimés</h3>
-                            <ul>{interactions.likedPosts.map((post, index) => <li key={index} className="border-b py-2 text-gray-700">{post.title}</li>)}</ul>
-                        </div>
-
-                        {/* Posts commentés */}
-                        <div className="mb-6">
-                            <h3 className="text-lg font-semibold mb-2">Posts commentés</h3>
-                            <ul>{interactions.commentedPosts.map((post, index) => <li key={index} className="border-b py-2 text-gray-700">{post.title}</li>)}</ul>
-                        </div>
-
-                        {/* Posts partagés */}
-                        <div>
-                            <h3 className="text-lg font-semibold mb-2">Posts partagés</h3>
-                            <ul>{interactions.sharedPosts.map((post, index) => <li key={index} className="border-b py-2 text-gray-700">{post.title}</li>)}</ul>
-                        </div>
                     </div>
                 </div>
             </div>

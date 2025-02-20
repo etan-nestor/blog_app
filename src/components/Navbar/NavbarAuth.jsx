@@ -10,6 +10,7 @@ const NavbarAuth = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [usernameInitial, setUsernameInitial] = useState('');
+    const [userPhoto, setUserPhoto] = useState(null);
     const menuRef = useRef(null);
 
 
@@ -20,6 +21,7 @@ const NavbarAuth = () => {
         const user = JSON.parse(localStorage.getItem('user'));
         if (user) {
             setUsernameInitial(user.username.charAt(0).toUpperCase());
+            setUserPhoto(user.photo);
         }
     }, []);
 
@@ -92,8 +94,12 @@ const NavbarAuth = () => {
                         className="text-white hover:text-gray-400"
                         onClick={() => navigate('/profile')}
                     >
-                        <div className="bg-orange-600 w-8 h-8 p-1 rounded-full">
-                        {usernameInitial || 'U'}
+                        <div className="border bg-gray-100 hover:bg-blue-600 w-8 h-8 p-1 rounded-full">
+                            {userPhoto ? (
+                                <img src={`http://localhost:5000/${userPhoto}`} alt="Profil" className="w-full h-full rounded-full" />
+                            ) : (
+                                usernameInitial || 'U'
+                            )}
                         </div>
                     </button>
                     {/* Bouton thème */}
