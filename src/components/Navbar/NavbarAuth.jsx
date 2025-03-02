@@ -20,8 +20,8 @@ const NavbarAuth = () => {
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
         if (user) {
-            setUsernameInitial(user.username.charAt(0).toUpperCase());
             setUserPhoto(user.photo);
+            setUsernameInitial(user.username.charAt(0).toUpperCase());
         }
     }, []);
 

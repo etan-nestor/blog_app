@@ -23,19 +23,19 @@ const Home = () => {
                 <LoaderPage />  // Affiche le loader pendant 2 secondes
             ) : (
                 <>
-                    <div className="h-[90vh]">
+                    <div className="md:h-[90vh]">
                         <HeaderContent />
                     </div>
-                    <div className="h-[90vh]">
+                    <div className="md:h-[90vh]">
                         <RecentPosts />
                     </div>
-                    <div className="h-[90vh]">
+                    <div className="md:h-[90vh]">
                         <PopularPosts />
                     </div>
-                    <div className="h-[90vh]">
+                    <div className="md:h-[90vh]">
                         <ArchivePosts />
                     </div>
-                    <div className="h-[50vh]">
+                    <div className="md:h-[50vh]">
                         <NewsletterCard />
                     </div>
                 </>

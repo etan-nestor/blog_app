@@ -267,11 +267,11 @@ const PostDetail = () => {
 
 
     return (
-        <div className="flex justify-center mt-12">
-            <div className="bg-[#3f4c69] max-w-[60rem] p-6 rounded-lg shadow-lg">
+        <div className="flex justify-center mt-12 md:mt-12">
+            <div className="bg-[#3f4c69] max-w-[25rem] md:max-w-[60rem] md:p-6 p-3 rounded-lg shadow-lg">
                 {/* Titre */}
                 <div className="flex justify-center">
-                    <h1 className="w-[700px] text-3xl font-bold text-center text-white mb-4">
+                    <h1 className="md:w-[700px] text-2xl w-[350px] md:text-3xl font-bold text-center text-white mb-4">
                         {title}
                     </h1>
                 </div>
@@ -280,12 +280,12 @@ const PostDetail = () => {
                     <img
                         src={`http://localhost:5000/${image}`}
                         alt={title}
-                        className="w-[30rem] h-[30rem] cursor-pointer object-scale-down rounded-lg hover:opacity-90 transition-opacity duration-300"
+                        className="md:w-[30rem] w-[20rem] md:h-[30rem] h-[20rem] cursor-pointer object-scale-down rounded-lg hover:opacity-90 transition-opacity duration-300"
                     />
                 </div>
 
                 {/* Auteur et date */}
-                <div className="flex justify-center items-center gap-[25rem] text-white mb-6">
+                <div className="flex justify-center items-center md:gap-[25rem] gap-[3rem] text-white mb-6">
                     <span className="italic font-semibold cursor-pointer p-2 bg-orange-600 rounded-tl-lg rounded-br-lg">
                         Nestor COMPAORE
                     </span>

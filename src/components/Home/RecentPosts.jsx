@@ -38,16 +38,16 @@ export const RecentPosts = () => {
     if (loading) return <LoadData message="Chargement des articles recents" />;
     if (error) return <HomeError message="Erreur de recuperation des articles Recents !" image={errorR} />;
     return (
-        <div className="ml-[3rem] py-8 text-white">
-            <h1 className="text-4xl font-bold mb-4">Articles récents</h1>
-            <div className="w-[260px] h-2 bg-orange-500 mb-6"></div>
+        <div className="md:ml-[3rem] md:py-8 text-white mx-[2rem] py-8">
+            <h1 className="md:text-4xl text-2xl font-bold md:mb-4 mb-2">Articles récents</h1>
+            <div className="md:w-[260px] w-[180px] h-2 bg-orange-500 md:mb-6 mb-4"></div>
             <div className="flex justify-start items-start">
-                <p className="w-[600px] text-xl font-semibold text-white mb-6">
+                <p className="w-[600px] md:text-xl text-[1rem] font-semibold text-white mb-6">
                 Découvrez les derniers articles et mises à jour sur la tech l&#39;innovation et beaucoup d&#39;autres. Restez à jour avec les meilleures idées !
                 </p>
             </div>
 
-            <div className="flex justify-start items-center gap-8">
+            <div className="md:flex md:justify-start md:items-center md:gap-8 justify-center items-center gap-8">
                 {recentPosts.slice(0, 4).map((post) => (
                     <PostCard
                         key={post.id}

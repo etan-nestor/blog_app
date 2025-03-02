@@ -22,9 +22,9 @@ const PostCard = ({
         navigate(`/post/${id}`);
     };
     return (
-        <div className="bg-[#3f4c69] w-[352px] h-[390px] rounded-[28px] p-4 shadow-md relative cursor-pointer">
+        <div className="bg-[#3f4c69] md:w-[352px] w-[300px] md:h-[390px] h-[348px] rounded-[28px] md:p-4 p-2 shadow-md relative cursor-pointer">
             {/* Image Card */}
-            <div className="flex justify-center items-center bg-transparent w-[352px] h-[234px] rounded-[28px] border right-4 bottom-4 border-white shadow-lg relative"
+            <div className="flex justify-center items-center bg-transparent md:w-[352px] w-[300px] md:h-[234px] rounded-[28px] border md:right-4 md:bottom-4 right-2 bottom-2 border-white shadow-lg relative"
                 onClick={handleImageClick}
                 role="button"
                 aria-label={`Voir les détails de ${title}`}
@@ -39,16 +39,16 @@ const PostCard = ({
             {/* Content Section */}
             <div className="text-white">
                 {/* Title */}
-                <h3 className=" w-[330px] text-center text-lg font-semibold">{title}</h3>
+                <h3 className=" md:w-[330px] w-[250px] text-center md:text-lg text-[1rem] font-semibold">{title}</h3>
 
                 {/* Date and Author */}
-                <div className="flex justify-center items-center gap-8 mt-2 text-sm font-semibold text-gray-300">
+                <div className="flex justify-center items-center gap-8 mb:mt-2 mt-1 md:text-sm text-[0.7rem] font-semibold text-gray-300">
                     <span>{date}</span>
                     <span>{author}</span>
                 </div>
 
                 {/* Icons Section */}
-                <div className="flex justify-center items-center gap-8 mt-4 text-sm">
+                <div className="flex justify-center items-center gap-8 md:mt-4 mt-1 text-sm">
 
                     {/* Likes */}
                     <div className="flex items-center gap-2">

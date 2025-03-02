@@ -47,7 +47,7 @@ export const ArchivePosts = () => {
                     Revisitez nos anciens articles et redécouvrez des trésors de connaissances intemporels.
                 </p>
             </div>
-            <div className="flex justify-center items-center gap-8">
+            <div className="md:flex md:justify-start md:items-center md:gap-8 justify-center items-center gap-2">
                 {archivePosts.slice(0, 4).map((post) => (
                     <PostCard
                         key={post.id}

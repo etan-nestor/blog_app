@@ -101,7 +101,6 @@ const Profile = () => {
             // Mettre à jour les données dans le localStorage
             const updatedUser = { ...profileData, photo: profileData.photo ? URL.createObjectURL(profileData.photo) : null };
             localStorage.setItem('user', JSON.stringify(updatedUser));
-            
             if (response.data.message) {
                 toast.success('Profil mis à jour avec succès !');
             }
@@ -149,8 +148,8 @@ const Profile = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Informations personnelles */}
-                    <div className="bg-white p-6 rounded-lg shadow-lg border">
-                        <h2 className="text-xl font-semibold mb-4 text-gray-600">Informations personnelles</h2>
+                    <div className="bg-[#071738] p-6 rounded-lg shadow-lg border">
+                        <h2 className="text-xl font-semibold mb-4 text-white">Informations personnelles</h2>
                         <form onSubmit={handleSubmit}>
                             <div className="space-y-4">
                                 <div className="flex items-center space-x-4">
@@ -202,21 +201,26 @@ const Profile = () => {
                                     placeholder="Téléphone"
                                 />
                                 <div className="flex justify-between items-center">
-                                    <label className="text-gray-600">Photo de profil</label>
+                                    <label className="text-white">Photo de profil</label>
                                     <input
                                         type="file"
                                         onChange={handlePhotoChange}
                                         className="border p-2 rounded-md"
                                     />
                                 </div>
-                                <button type="submit" className="mt-4 bg-blue-600 text-white py-2 px-6 rounded-md">
+                                <button type="submit" className="mt-4 bg-orange-600 hover:bg-blue-600 text-white py-2 px-6 rounded-md">
                                     <FaEdit className="inline mr-2" />
                                     Modifier
                                 </button>
                             </div>
                         </form>
                     </div>
+                    <div className="bg-[#071738] p-6 rounded-lg shadow-lg border">
+
+                    </div>
                 </div>
+
+
             </div>
         </div>
     );

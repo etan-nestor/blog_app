@@ -35,7 +35,7 @@ export const PopularPosts = () => {
     if (error) return <HomeError message="Erreur de recuperation des articles les plus aimes !" image={errorP} />;
 
     return (
-        <div className="mr-[3rem] py-8 text-white">
+        <div className="md:mr-[3rem] md:py-8 text-white mx-[2rem] py-8">
             <h1 className="text-4xl text-right font-bold mb-4">Articles populaires</h1>
             <div className="flex justify-end items-end">
                 <div className="w-[310px] h-2 bg-orange-500 mb-6"></div>
@@ -45,7 +45,7 @@ export const PopularPosts = () => {
                 Plongez dans nos articles les plus appréciés et explorez les sujets qui captivent notre communauté.
                 </p>
             </div>
-            <div className="flex justify-end items-center gap-8">
+            <div className="md:flex md:justify-start md:items-center md:gap-8 justify-center items-center gap-2">
                 {popularPosts.slice(0, 4).map((post) => (
                     <PostCard
                         key={post.id}
