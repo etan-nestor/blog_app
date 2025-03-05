@@ -25,7 +25,7 @@ const Welcome = () => {
             ) : (
                 <div className="flex flex-col items-center justify-center min-h-screen bg-[#071738] text-white px-4">
                     {/* Titre */}
-                    <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 text-center max-w-3xl">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-center max-w-3xl">
                         Bienvenue dans l&#39;univers du savoir et de l&#39;innovation <span className='text-orange-600'>!</span>
                     </h2>
 
@@ -54,7 +54,7 @@ const Welcome = () => {
                     </button>
 
                     {/* Image de bienvenue */}
-                    <div className="-mt-8 max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mb-16">
+                    <div className="-mt-[3rem] md:-mt-[10rem] max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mb-1">
                         <img className="w-full h-auto cursor-pointer" src={WelcomeImg} alt="Light" />
                     </div>
                 </div>
