@@ -4,7 +4,6 @@ import * as yup from 'yup';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import Logo from '../../assets/Logo.png';
-import Amico from '../../assets/amico.png';
 import './forms.css';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../../api/apiAxiosConfig';
@@ -73,11 +72,6 @@ const SendLink = () => {
                             {errors.email && <p className="text-orange-500">{errors.email.message}</p>}
                         </div>
 
-                        {/* Image between the input and the submit button on desktop */}
-                        <div className="relative hidden sm:block sm:mt-1">
-                            <img src={Amico} alt="Amico" />
-                        </div>
-
                         {/* Submit Button */}
                         <div className="flex justify-center items-center mt-2">
                             <button
@@ -102,11 +96,6 @@ const SendLink = () => {
                             </p>
                         </div>
                     </form>
-
-                    {/* Image for mobile */}
-                    <div className="relative sm:hidden mt-4">
-                        <img src={Amico} alt="Amico" />
-                    </div>
                 </div>
             </div>
         </div>
