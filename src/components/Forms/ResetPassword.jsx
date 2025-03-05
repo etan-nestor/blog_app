@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import './forms.css';
 import Logo from '../../assets/Logo.png';
 
-// Validation avec Yup
+// Validation schema avec Yup
 const schema = yup.object({
     newPassword: yup
         .string()
@@ -31,31 +31,21 @@ const ResetPassword = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const navigate = useNavigate();
 
-    const handleNavigate = () => {
-        navigate('/');
-    };
+    const handleNavigate = () => navigate('/');
 
     const onSubmit = async (data) => {
-        const token = localStorage.getItem('token'); // Récupère le token d'authentification depuis le stockage local
+        const token = localStorage.getItem('token'); // Récupérer le token
 
-        // Vérifiez si un token est disponible avant d'envoyer la requête
         if (!token) {
             toast.error('Token is missing, please login again!');
             return;
         }
 
-        // Envoi de la requête avec le token dans les en-têtes
+        // Envoi de la requête pour réinitialiser le mot de passe
         toast.promise(
-            apiClient.post('/users/reset-password',
-                {
-                    token,  // Ajout du token dans le corps de la requête
-                    newPassword: data.newPassword
-                },
-                {
-                    headers: {
-                        'Authorization': `Bearer ${token}`, // Ajout du token dans l'en-tête Authorization
-                    }
-                }
+            apiClient.post('/users/reset-password', 
+                { token, newPassword: data.newPassword }, 
+                { headers: { 'Authorization': `Bearer ${token}` } }
             ),
             {
                 loading: 'Resetting password...',
@@ -71,10 +61,9 @@ const ResetPassword = () => {
         );
     };
 
-
     return (
-        <div className="flex justify-center items-center h-[94vh]">
-            <div className="w-[654px] h-[500px] rounded-[18px] shadow-md p-4 bg-[#242F47]">
+        <div className="flex justify-center items-center h-[94vh] px-4">
+            <div className="w-full max-w-[654px] h-[500px] rounded-[18px] shadow-md p-4 bg-[#242F47]">
                 <div className="flex flex-col justify-center items-center gap-3 h-[70vh]">
                     {/* Logo */}
                     <div className="flex justify-center items-center mt-2">
@@ -89,13 +78,13 @@ const ResetPassword = () => {
                     </div>
 
                     {/* Form */}
-                    <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
+                    <form className="flex flex-col gap-3 w-full" onSubmit={handleSubmit(onSubmit)}>
                         {/* New Password Field */}
                         <div className="relative">
                             <span className="absolute cursor-pointer hover:bg-blue-900 bg-orange-600 w-[55px] h-[40px] rounded-[8px]"></span>
                             <input
                                 type={showPassword ? 'text' : 'password'}
-                                className="rounded-[8px] w-[366px] h-[40px] pl-[4rem] pr-10"
+                                className="rounded-[8px] w-full sm:w-[366px] h-[40px] pl-[4rem] pr-10"
                                 {...register('newPassword')}
                                 placeholder="New Password"
                             />
@@ -113,7 +102,7 @@ const ResetPassword = () => {
                             <span className="absolute cursor-pointer hover:bg-blue-900 bg-orange-600 w-[55px] h-[40px] rounded-[8px]"></span>
                             <input
                                 type={showConfirmPassword ? 'text' : 'password'}
-                                className="rounded-[8px] w-[366px] h-[40px] pl-[4rem] pr-10"
+                                className="rounded-[8px] w-full sm:w-[366px] h-[40px] pl-[4rem] pr-10"
                                 {...register('confirmPassword')}
                                 placeholder="Confirm Password"
                             />
@@ -126,8 +115,9 @@ const ResetPassword = () => {
                             {errors.confirmPassword && <p className="text-orange-500">{errors.confirmPassword.message}</p>}
                         </div>
 
+                        {/* Submit Button */}
                         <div className="flex justify-center items-center mt-2">
-                            <button type="submit" className="w-[157px] h-[40px] hover:bg-blue-600 bg-orange-600 text-white p-2 rounded">
+                            <button type="submit" className="w-full sm:w-[157px] h-[40px] hover:bg-blue-600 bg-orange-600 text-white p-2 rounded">
                                 Reset Password
                             </button>
                         </div>
@@ -135,8 +125,14 @@ const ResetPassword = () => {
 
                     {/* Navigation Links */}
                     <div className="relative left-[10rem] text-white flex flex-col items-end justify-end gap-1 cursor-pointer">
-                        <p className='text-gray-500'>Remembered your password?- <span className='text-orange-500 font-semibold underline' onClick={() => navigate('/login')}>Log In</span></p>
-                        <p className='text-gray-500'>No account yet?- <span className='text-orange-500 font-semibold underline' onClick={() => navigate('/signup')}>Register here</span></p>
+                        <p className='text-gray-500'>
+                            Remembered your password?- 
+                            <span className='text-orange-500 font-semibold underline' onClick={() => navigate('/login')}>Log In</span>
+                        </p>
+                        <p className='text-gray-500'>
+                            No account yet?- 
+                            <span className='text-orange-500 font-semibold underline' onClick={() => navigate('/signup')}>Register here</span>
+                        </p>
                     </div>
                 </div>
             </div>

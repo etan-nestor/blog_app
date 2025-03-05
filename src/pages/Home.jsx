@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ArchivePosts } from "../components/Home/ArchivePosts";
 import HeaderContent from "../components/Home/HeaderContent";
 import { PopularPosts } from "../components/Home/PopularPosts";
@@ -6,38 +6,38 @@ import { RecentPosts } from "../components/Home/RecentPosts";
 import NewsletterCard from "../components/Other/NewsletterCard";
 import LoaderPage from '../components/loader/LoaderPage';
 
-
-
 const Home = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             setLoading(false);
-        }, 4000);
+        }, 3000); // Temps de chargement optimisé à 3s
+
+        return () => clearTimeout(timer); // Nettoyage du timer au démontage
     }, []);
 
     return (
-        <div className="bg-[#071738] pt-[60px]">
+        <div className="bg-[#071738] min-h-screen pt-[60px]" aria-live="polite">
             {loading ? (
-                <LoaderPage />  // Affiche le loader pendant 2 secondes
+                <LoaderPage />  // Affichage du loader pendant 3 secondes
             ) : (
                 <>
-                    <div className="md:h-[90vh]">
+                    <section className="min-h-screen flex justify-center items-center">
                         <HeaderContent />
-                    </div>
-                    <div className="md:h-[90vh]">
+                    </section>
+                    <section className="min-h-screen flex justify-center items-center">
                         <RecentPosts />
-                    </div>
-                    <div className="md:h-[90vh]">
+                    </section>
+                    <section className="min-h-screen flex justify-center items-center">
                         <PopularPosts />
-                    </div>
-                    <div className="md:h-[90vh]">
+                    </section>
+                    <section className="min-h-screen flex justify-center items-center">
                         <ArchivePosts />
-                    </div>
-                    <div className="md:h-[50vh]">
+                    </section>
+                    <section className="min-h-[50vh] flex justify-center items-center">
                         <NewsletterCard />
-                    </div>
+                    </section>
                 </>
             )}
         </div>

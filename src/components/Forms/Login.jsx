@@ -12,8 +12,8 @@ import Logo from '../../assets/Logo.png';
 
 // Validation avec Yup
 const schema = yup.object({
-    email: yup.string().email('Invalid email').required('Email is required'),
-    password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+    email: yup.string().email('Email invalide').required('L\'email est requis'),
+    password: yup.string().min(6, 'Le mot de passe doit comporter au moins 6 caractères').required('Le mot de passe est requis'),
 });
 
 const Login = () => {
@@ -38,8 +38,6 @@ const Login = () => {
 
                     // Enregistrer le token dans le localStorage
                     localStorage.setItem('token', token);
-
-                    // Optionnel : Tu peux également enregistrer l'utilisateur si nécessaire
                     localStorage.setItem('user', JSON.stringify(user));
 
                     setTimeout(() => navigate('/home'), 2000); // Redirection après succès
@@ -58,38 +56,45 @@ const Login = () => {
     };
 
     return (
-        <div className="flex justify-center items-center h-[94vh]">
-            <div className="w-[654px] h-[500px] rounded-[18px] shadow-md p-4 bg-[#242F47]">
-                <div className="flex flex-col justify-center items-center gap-3 h-[70vh]">
-                    {/* logo */}
+        <main className="flex justify-center items-center min-h-screen bg-[#071738]">
+            <div className="w-full max-w-md h-auto rounded-[18px] shadow-md p-6 bg-[#242F47]">
+                <div className="flex flex-col justify-center items-center gap-3">
+                    {/* Logo */}
                     <div className='flex justify-center items-center mt-2'>
-                        <img onClick={handleNavigate} className='cursor-pointer w-[120px]' src={Logo} alt="Logo" />
+                        <img
+                            onClick={handleNavigate}
+                            className='cursor-pointer w-[120px] sm:w-[150px]'
+                            src={Logo}
+                            alt="Logo de l'application"
+                        />
                     </div>
-                    {/* descr */}
+                    {/* Description */}
                     <div className="flex justify-center items-center text-center">
-                        <h3 className="w-[400px] text-center text-[18px] font-sembold text-white mb-4">Connectez-vous pour accéder à votre compte et à du contenu exclusif!</h3>
+                        <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">
+                            Connectez-vous pour accéder à votre compte et à du contenu exclusif !
+                        </h3>
                     </div>
-                    {/* form */}
-                    <form className='flex flex-col gap-3' onSubmit={handleSubmit(onSubmit)}>
+                    {/* Formulaire */}
+                    <form className='flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
                         {/* Email Field */}
                         <div className="relative">
-                            <span className='absolute cursor-pointer hover:bg-orange-700 bg-blue-600 w-[55px] h-[40px] rounded-[8px]'></span>
                             <input
-                                className="rounded-[8px] w-[366px] h-[40px] pl-[4rem]"
+                                className="rounded-[8px] w-full h-[40px] pl-4"
                                 {...register('email')}
                                 placeholder="Email"
+                                aria-label="Email"
                             />
-                            {errors.email && <p className="text-orange-500">{errors.email.message}</p>}
+                            {errors.email && <p className="text-orange-500 text-sm">{errors.email.message}</p>}
                         </div>
 
                         {/* Password Field with Eye Icon */}
                         <div className="relative">
-                            <span className='absolute cursor-pointer hover:bg-blue-900 bg-orange-600 w-[55px] h-[40px] rounded-[8px]'></span>
                             <input
                                 type={showPassword ? 'text' : 'password'}
-                                className="rounded-[8px] w-[366px] h-[40px] pl-[4rem] pr-10"
+                                className="rounded-[8px] w-full h-[40px] pl-4 pr-10"
                                 {...register('password')}
-                                placeholder="Password"
+                                placeholder="Mot de passe"
+                                aria-label="Mot de passe"
                             />
                             <span
                                 className="absolute right-3 top-2 cursor-pointer p-1"
@@ -97,20 +102,40 @@ const Login = () => {
                             >
                                 {showPassword ? <FaEyeSlash className="text-gray-400" /> : <FaEye className="text-gray-400" />}
                             </span>
-                            {errors.password && <p className="text-orange-500">{errors.password.message}</p>}
+                            {errors.password && <p className="text-orange-500 text-sm">{errors.password.message}</p>}
                         </div>
 
-                        <div className="flex justify-center items-center mt-2">
-                            <button type="submit" className="w-[157px] h-[40px] hover:bg-blue-600 bg-orange-600 text-white p-2 rounded">Login</button>
+                        <div className="flex justify-center items-center mt-4">
+                            <button type="submit" className="w-full sm:w-[157px] h-[40px] hover:bg-blue-600 bg-orange-600 text-white p-2 rounded-md">
+                                Se connecter
+                            </button>
                         </div>
                     </form>
-                    <div className="relative left-[10rem] text-white flex flex-col items-end justify-end gap-1 cursor-pointer">
-                        <p className='text-gray-500'>No account yet?- <span className='text-orange-500 font-semibold underline' onClick={() => navigate('/signup')}>Register now</span></p>
-                        <p className='text-gray-500'>Forgot your password?- <span className='text-orange-500 font-semibold underline' onClick={() => navigate('/reset-password-link')}>Reset it here</span></p>
+
+                    {/* Additional Links */}
+                    <div className="text-center text-white mt-4">
+                        <p className='text-gray-500'>
+                            Pas de compte ?{' '}
+                            <span
+                                className='text-orange-500 font-semibold underline cursor-pointer'
+                                onClick={() => navigate('/signup')}
+                            >
+                                Inscrivez-vous
+                            </span>
+                        </p>
+                        <p className='text-gray-500'>
+                            Mot de passe oublié ?{' '}
+                            <span
+                                className='text-orange-500 font-semibold underline cursor-pointer'
+                                onClick={() => navigate('/reset-password-link')}
+                            >
+                                Réinitialisez-le ici
+                            </span>
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     );
 };
 

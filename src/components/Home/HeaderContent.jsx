@@ -1,37 +1,54 @@
-import vector from '../../assets/Vector.png'
-import header from '../../assets/Home/blog.jpg'
+import { useNavigate } from "react-router-dom";
 import { IoNavigateCircle } from "react-icons/io5";
 import { IoMdNavigate } from "react-icons/io";
-import '../../styles/anime.css';
-import { useNavigate } from 'react-router-dom';
-
+import vector from "../../assets/Vector.png";
+import header from "../../assets/Home/blog.jpg";
+import "../../styles/anime.css";
 
 const HeaderContent = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
     return (
-        <div className="text-center py-8 text-white">
-            <h1 className="md:text-4xl text-3xl font-bold mb-4 md:mb-3">Exploration & Savoir !</h1>
-            <div className="md:w-[300px] w-[200px] h-2 bg-orange-500 mx-auto mb-6"></div>
-            <div className="flex justify-center">
-                <p className="text-center  w-[700px] text-xl md:text-[1.5rem] font-semibold text-white mb-6 z-10">
+        <section className="relative flex flex-col items-center text-center py-12 text-white">
+            {/* Titre et Sous-titre */}
+            <div className="max-w-3xl mx-auto">
+                <h2 className="text-3xl md:text-5xl font-bold mb-4">Exploration & Savoir !</h2>
+                <div className="w-24 h-2 bg-orange-500 mx-auto mb-6"></div>
+                <p className="text-lg md:text-xl font-medium w-full max-w-[700px] mx-auto">
                     Partagez, apprenez et explorez des idées pour enrichir vos connaissances et développer vos compétences.
                 </p>
             </div>
-            <div className="absolute md:top-[12rem] top-[8rem] -left-[15rem]">
-                <img src={vector} alt="vector" className='md:w-[400px] w-[300px] md:h-[414px] h-[314px] cursor-pointer' />
+
+            {/* Image vectorielle décorative a revoir*/}
+            <div className="fixed -top-[60px] -left-[5rem] md:-top-[20%] md:-left-[10%] -z-10">
+                <img src={vector} alt="Décoration" className="w-64 md:w-80" />
             </div>
-            <div className="flex justify-center items-center md:gap-6 gap-3">
-                <button onClick={() => navigate('/posts')} className="md:px-6 px-4 md:py-3 py-2 bg-blue-500 text-white font-semibold rounded-full hover:bg-orange-600 transition duration-200 z-10 ml-2">
-                    <IoNavigateCircle size={20} />
+            
+            {/* Contenu principal centré */}
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-8">
+                <button
+                    onClick={() => navigate('/posts')}
+                    className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-full hover:bg-orange-600 transition duration-300"
+                    aria-label="Explorer les posts"
+                >
+                    <IoNavigateCircle size={24} />
                 </button>
-                <div className="flex justify-center items-center">
-                    <img src={header} alt="Tech & Innovation" className="md:w-[650px] w-[550px] h-[180px] md:h-[400px] cursor-pointer animate-bounce-moderate rounded-lg" />
-                </div>
-                <button onClick={() => navigate('/posts')} className="md:px-6 px-4 md:py-3 py-2 bg-orange-500 text-white font-semibold rounded-full hover:bg-blue-600 transition duration-200 mr-2">
-                    <IoMdNavigate size={20} />
+
+                <img
+                    src={header}
+                    alt="Tech & Innovation"
+                    className="w-72 md:w-[550px] h-auto rounded-lg shadow-lg animate-bounce-moderate"
+                />
+
+                <button
+                    onClick={() => navigate('/posts')}
+                    className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-full hover:bg-blue-600 transition duration-300"
+                    aria-label="Naviguer vers les articles"
+                >
+                    <IoMdNavigate size={24} />
                 </button>
             </div>
-        </div>
+        </section>
     );
 };
 

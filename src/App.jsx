@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
-import { AuthProvider } from '../src/components/Other/AuthProvider'
-import ProtectedRoute from '../src/components/Other/ProtectedRoute';
+// /* eslint-disable react/prop-types */
+// import { AuthProvider } from '../src/components/Other/AuthProvider'
+// import ProtectedRoute from '../src/components/Other/ProtectedRoute';
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
@@ -45,7 +46,7 @@ const App = () => {
         position="bottom-center"
         reverseOrder={false}
       />
-      <AuthProvider>
+      {/* <AuthProvider> */}
         <Layout>
           <Routes>
             {/* Pages publiques */}
@@ -59,26 +60,26 @@ const App = () => {
             {/* Pages protégées */}
             <Route
               path="/home"
-              element={<ProtectedRoute><Home /></ProtectedRoute>}
+              element={<Home />}
             />
             <Route
               path="/posts"
-              element={<ProtectedRoute><PostsPage /></ProtectedRoute>}
+              element={<PostsPage />}
             />
             <Route
               path="/post/:id"
-              element={<ProtectedRoute><DetailPost /></ProtectedRoute>}
+              element={<DetailPost />}
             />
             <Route
               path="/profile"
-              element={<ProtectedRoute><Profile /></ProtectedRoute>}
+              element={<Profile />}
             />
 
             {/* for dev test */}
             <Route path="/post-add" element={<AddPosts />} />
           </Routes>
         </Layout>
-      </AuthProvider>
+      {/* </AuthProvider> */}
     </Router>
   );
 };

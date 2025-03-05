@@ -2,16 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import { FaRegCommentDots, FaRegHeart, FaShareAlt } from "react-icons/fa";
 
-const PostCard = ({
-    id,
-    image,
-    title,
-    date,
-    author,
-    comments,
-    likes,
-    shares
-}) => {
+const PostCard = ({ id, image, title, date, author, comments, likes, shares }) => {
     const navigate = useNavigate();
 
     const handleImageClick = () => {
@@ -21,51 +12,52 @@ const PostCard = ({
         }
         navigate(`/post/${id}`);
     };
+
     return (
-        <div className="bg-[#3f4c69] md:w-[352px] w-[300px] md:h-[390px] h-[348px] rounded-[28px] md:p-4 p-2 shadow-md relative cursor-pointer">
+        <div className="bg-[#3f4c69] max-w-xs sm:max-w-sm md:max-w-md rounded-2xl p-4 shadow-md cursor-pointer">
             {/* Image Card */}
-            <div className="flex justify-center items-center bg-transparent md:w-[352px] w-[300px] md:h-[234px] rounded-[28px] border md:right-4 md:bottom-4 right-2 bottom-2 border-white shadow-lg relative"
+            <div
+                className="flex justify-center items-center bg-transparent w-full aspect-square rounded-2xl border border-white shadow-lg"
                 onClick={handleImageClick}
                 role="button"
                 aria-label={`Voir les détails de ${title}`}
             >
                 <img
                     src={`http://localhost:5000/${image}`}
-                    alt={title}
-                    className="w-[230px] h-[230px] object-fit cursor-pointer"
+                    alt={`Illustration du post : ${title}`}
+                    className="w-4/5 h-4/5 object-cover rounded-xl"
                 />
             </div>
 
             {/* Content Section */}
-            <div className="text-white">
+            <div className="text-white text-center mt-3">
                 {/* Title */}
-                <h3 className=" md:w-[330px] w-[250px] text-center md:text-lg text-[1rem] font-semibold">{title}</h3>
+                <h2 className="text-lg sm:text-xl font-semibold">{title}</h2>
 
                 {/* Date and Author */}
-                <div className="flex justify-center items-center gap-8 mb:mt-2 mt-1 md:text-sm text-[0.7rem] font-semibold text-gray-300">
+                <div className="flex justify-center items-center gap-4 text-gray-300 text-xs sm:text-sm mt-1">
                     <span>{date}</span>
                     <span>{author}</span>
                 </div>
 
                 {/* Icons Section */}
-                <div className="flex justify-center items-center gap-8 md:mt-4 mt-1 text-sm">
-
+                <div className="flex justify-center items-center gap-6 sm:gap-8 flex-wrap mt-3">
                     {/* Likes */}
-                    <div className="flex items-center gap-2">
-                        <FaRegHeart className="text-gray-300 w-5 h-5" />
-                        <span>{likes}</span>
+                    <div className="flex items-center gap-1 sm:gap-2">
+                        <FaRegHeart className="text-gray-300 w-4 h-4 sm:w-5 sm:h-5" />
+                        <span className="text-sm sm:text-base">{likes}</span>
                     </div>
 
                     {/* Comments */}
-                    <div className="flex items-center gap-2">
-                        <FaRegCommentDots className="text-gray-300 w-5 h-5" />
-                        <span>{comments}</span>
+                    <div className="flex items-center gap-1 sm:gap-2">
+                        <FaRegCommentDots className="text-gray-300 w-4 h-4 sm:w-5 sm:h-5" />
+                        <span className="text-sm sm:text-base">{comments}</span>
                     </div>
 
                     {/* Shares */}
-                    <div className="flex items-center gap-2">
-                        <FaShareAlt className="text-gray-300 w-5 h-5" />
-                        <span>{shares}</span>
+                    <div className="flex items-center gap-1 sm:gap-2">
+                        <FaShareAlt className="text-gray-300 w-4 h-4 sm:w-5 sm:h-5" />
+                        <span className="text-sm sm:text-base">{shares}</span>
                     </div>
                 </div>
             </div>

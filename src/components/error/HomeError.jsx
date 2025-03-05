@@ -1,14 +1,19 @@
 /* eslint-disable react/prop-types */
 
-
-const HomeError = ({image,message}) => {
+const HomeError = ({ image, message }) => {
     return (
-        <div className="flex flex-col items-center justify-center h-screen">
+        <main className="flex flex-col items-center justify-center h-screen bg-[#071738] text-white">
             <div>
-                <img className='w-[100px] cursor-pointer' src={image} alt="error" />
+                <img
+                    className="w-[80px] sm:w-[100px] cursor-pointer mx-auto"
+                    src={image}
+                    alt="Image d'erreur, veuillez réessayer plus tard"
+                />
             </div>
-            <h1 className="text-xl font-bold text-red-500 mb-4">{message}</h1>
-        </div>
+            <h1 className="text-xl sm:text-2xl font-bold text-red-500 mb-4 text-center">
+                {message}
+            </h1>
+        </main>
     );
 };
 

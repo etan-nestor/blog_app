@@ -3,14 +3,12 @@ import apiClient from "../../api/apiAxiosConfig";
 import PostCard from "../Other/PostCard";
 import LoadData from "../loader/LoadData";
 import HomeError from "../error/HomeError";
-import errorR from '../../assets/ErrR.png'
-
+import errorR from '../../assets/ErrR.png';
 
 export const RecentPosts = () => {
-
-    const [recentPosts, setRecentPosts] = useState([]); // État pour stocker les posts
-    const [loading, setLoading] = useState(true); // État pour indiquer si les données sont en cours de chargement
-    const [error, setError] = useState(null); // État pour les erreurs éventuelles
+    const [recentPosts, setRecentPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -21,39 +19,43 @@ export const RecentPosts = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
+
                 setTimeout(() => {
-                    setRecentPosts(response.data); // Stockage des posts dans l'état
+                    setRecentPosts(response.data);
                     setLoading(false);
                 }, 400);
-                // Désactive le chargement
             } catch (err) {
-                setError(err.message); // Capture des erreurs
-                setLoading(false); // Désactive le chargement
+                setError(err.message);
+                setLoading(false);
             }
         };
 
-        fetchPosts(); // Appeler l'API lors du montage du composant
+        fetchPosts();
     }, []);
 
-    if (loading) return <LoadData message="Chargement des articles recents" />;
-    if (error) return <HomeError message="Erreur de recuperation des articles Recents !" image={errorR} />;
+    if (loading) return <LoadData message="Chargement des articles récents..." aria-live="polite" />;
+    if (error) return <HomeError message="Erreur de récupération des articles récents !" image={errorR} />;
+
     return (
-        <div className="md:ml-[3rem] md:py-8 text-white mx-[2rem] py-8">
-            <h1 className="md:text-4xl text-2xl font-bold md:mb-4 mb-2">Articles récents</h1>
-            <div className="md:w-[260px] w-[180px] h-2 bg-orange-500 md:mb-6 mb-4"></div>
-            <div className="flex justify-start items-start">
-                <p className="w-[600px] md:text-xl text-[1rem] font-semibold text-white mb-6">
-                Découvrez les derniers articles et mises à jour sur la tech l&#39;innovation et beaucoup d&#39;autres. Restez à jour avec les meilleures idées !
+        <section className="text-white px-4 md:px-12 py-8">
+            {/* Titre */}
+            <div className="max-w-3xl mx-auto text-center">
+                <h2 className="text-2xl md:text-4xl font-bold">Articles récents</h2>
+                <div className="w-24 h-2 bg-orange-500 mx-auto mt-2 mb-4 md:mb-6"></div>
+                <p className="text-sm md:text-lg font-medium">
+                    Découvrez les derniers articles et mises à jour sur la tech, l&#39;innovation et bien plus encore.
+                    Restez informé avec les meilleures idées !
                 </p>
             </div>
 
-            <div className="md:flex md:justify-start md:items-center md:gap-8 justify-center items-center gap-8">
+            {/* Liste des articles */}
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 place-items-center">
                 {recentPosts.slice(0, 4).map((post) => (
                     <PostCard
                         key={post.id}
                         id={post.id}
                         image={post.image}
-                        title={post.title.substring(0, 50) + (post.title.length > 50 ? "..." : "")}
+                        title={post.title.length > 50 ? `${post.title.substring(0, 50)}...` : post.title}
                         date={new Intl.DateTimeFormat("fr-FR", {
                             month: "short",
                             day: "2-digit",
@@ -66,6 +68,6 @@ export const RecentPosts = () => {
                     />
                 ))}
             </div>
-        </div>
+        </section>
     );
 };

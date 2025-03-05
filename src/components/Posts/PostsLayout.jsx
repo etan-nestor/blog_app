@@ -24,13 +24,12 @@ export const PostsLayout = () => {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
-                setTimeout(() => {
-                    setPosts(response.data);
-                    setFilteredPosts(response.data);
-                    setLoading(false);
-                }, 4000);
+                setPosts(response.data);
+                setFilteredPosts(response.data);
             } catch (err) {
-                setError("Une erreur est survenue lors du chargement des articles.", err);
+                console.error("Erreur lors du chargement des articles :", err);
+                setError("Une erreur est survenue lors du chargement des articles.");
+            } finally {
                 setLoading(false);
             }
         };
@@ -40,46 +39,48 @@ export const PostsLayout = () => {
 
     // 🎯 Fonction pour filtrer les posts
     useEffect(() => {
-        let filtered = [...posts];
+        let filtered = posts.filter((post) => {
+            const postDate = new Date(post.date);
 
-        // Filtrer par titre
-        if (searchTerm) {
-            filtered = filtered.filter((post) =>
-                post.title.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-        }
-
-        // Filtrer par date exacte
-        if (selectedDate) {
-            const formattedSelectedDate = selectedDate.toISOString().split("T")[0]; // Format YYYY-MM-DD
-            filtered = filtered.filter((post) => {
-                const postDate = new Date(post.date);
-                const formattedPostDate = postDate.toISOString().split("T")[0]; // Format YYYY-MM-DD
-                return formattedPostDate === formattedSelectedDate; // Comparer les dates au même format
-            });
-        }
-
-        // Filtrer par période (cette semaine, le mois dernier, etc.)
-        if (filter !== "all") {
-            const now = new Date();
-            const postDateLimit = new Date();
-
-            if (filter === "this-week") {
-                postDateLimit.setDate(now.getDate() - 7);
-            } else if (filter === "last-week") {
-                postDateLimit.setDate(now.getDate() - 14);
-            } else if (filter === "last-month") {
-                postDateLimit.setMonth(now.getMonth() - 1);
+            // Filtrer par titre
+            if (searchTerm && !post.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+                return false;
             }
 
-            filtered = filtered.filter((post) => new Date(post.date) >= postDateLimit);
-        }
+            // Filtrer par date exacte
+            if (selectedDate) {
+                const selectedDateFormatted = selectedDate.toISOString().split("T")[0];
+                const postDateFormatted = postDate.toISOString().split("T")[0];
+                if (postDateFormatted !== selectedDateFormatted) return false;
+            }
+
+            // Filtrer par période
+            if (filter !== "all") {
+                const now = new Date();
+                let postDateLimit = new Date();
+
+                switch (filter) {
+                    case "this-week":
+                        postDateLimit.setDate(now.getDate() - 7);
+                        break;
+                    case "last-week":
+                        postDateLimit.setDate(now.getDate() - 14);
+                        break;
+                    case "last-month":
+                        postDateLimit.setMonth(now.getMonth() - 1);
+                        break;
+                    default:
+                        break;
+                }
+
+                if (postDate < postDateLimit) return false;
+            }
+
+            return true;
+        });
 
         setFilteredPosts(filtered);
     }, [searchTerm, selectedDate, filter, posts]);
-
-
-
 
     if (loading) return <LoadData message="Chargement des articles ..." />;
     if (error) return <ErrorDisplay message={error} />;
@@ -87,16 +88,14 @@ export const PostsLayout = () => {
     return (
         <div>
             {/* Barre de recherche */}
-            <div className="">
-                <SearchBar
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
-                    selectedDate={selectedDate}
-                    setSelectedDate={setSelectedDate}
-                    filter={filter}
-                    setFilter={setFilter}
-                />
-            </div>
+            <SearchBar
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+                filter={filter}
+                setFilter={setFilter}
+            />
 
             {/* Liste des posts filtrés */}
             <CardPostList cards={filteredPosts} />
