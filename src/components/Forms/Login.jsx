@@ -56,8 +56,8 @@ const Login = () => {
     };
 
     return (
-        <main className="flex justify-center items-center min-h-screen bg-[#071738]">
-            <div className="w-full max-w-md h-auto rounded-[18px] shadow-md p-6 bg-[#242F47]">
+        <main className="flex justify-center items-center min-h-screen bg-[#071738] px-4">
+            <div className="w-full max-w-lg h-auto rounded-[18px] shadow-md p-6 bg-[#242F47]">
                 <div className="flex flex-col justify-center items-center gap-3">
                     {/* Logo */}
                     <div className='flex justify-center items-center mt-2'>
@@ -75,11 +75,11 @@ const Login = () => {
                         </h3>
                     </div>
                     {/* Formulaire */}
-                    <form className='flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
+                    <form className='flex flex-col gap-6' onSubmit={handleSubmit(onSubmit)}>
                         {/* Email Field */}
                         <div className="relative">
                             <input
-                                className="rounded-[8px] w-full h-[40px] pl-4"
+                                className="rounded-[8px] w-full h-[45px] sm:h-[50px] pl-4"
                                 {...register('email')}
                                 placeholder="Email"
                                 aria-label="Email"
@@ -91,7 +91,7 @@ const Login = () => {
                         <div className="relative">
                             <input
                                 type={showPassword ? 'text' : 'password'}
-                                className="rounded-[8px] w-full h-[40px] pl-4 pr-10"
+                                className="rounded-[8px] w-full h-[45px] sm:h-[50px] pl-4 pr-10"
                                 {...register('password')}
                                 placeholder="Mot de passe"
                                 aria-label="Mot de passe"
@@ -106,7 +106,7 @@ const Login = () => {
                         </div>
 
                         <div className="flex justify-center items-center mt-4">
-                            <button type="submit" className="w-full sm:w-[157px] h-[40px] hover:bg-blue-600 bg-orange-600 text-white p-2 rounded-md">
+                            <button type="submit" className="w-full sm:w-[180px] h-[45px] hover:bg-blue-600 bg-orange-600 text-white p-2 rounded-md">
                                 Se connecter
                             </button>
                         </div>
@@ -129,7 +129,7 @@ const Login = () => {
                                 className='text-orange-500 font-semibold underline cursor-pointer'
                                 onClick={() => navigate('/reset-password-link')}
                             >
-                                Réinitialisez-le ici
+                                Réinitialisez-le
                             </span>
                         </p>
                     </div>

@@ -63,8 +63,8 @@ const ResetPassword = () => {
 
     return (
         <div className="flex justify-center items-center h-[94vh] px-4">
-            <div className="w-full max-w-[654px] h-[500px] rounded-[18px] shadow-md p-4 bg-[#242F47]">
-                <div className="flex flex-col justify-center items-center gap-3 h-[70vh]">
+            <div className="w-full max-w-[654px] h-auto rounded-[18px] shadow-md p-4 bg-[#242F47]">
+                <div className="flex flex-col justify-center items-center gap-3">
                     {/* Logo */}
                     <div className="flex justify-center items-center mt-2">
                         <img onClick={handleNavigate} className="cursor-pointer w-[120px]" src={Logo} alt="Logo" />
@@ -72,7 +72,7 @@ const ResetPassword = () => {
 
                     {/* Description */}
                     <div className="flex justify-center items-center text-center">
-                        <h3 className="w-[400px] text-[18px] font-sembold text-white mb-4">
+                        <h3 className="w-[90%] sm:w-[400px] text-[18px] font-semibold text-white mb-4">
                             Reset your password by entering and confirming a new one below.
                         </h3>
                     </div>
@@ -80,11 +80,10 @@ const ResetPassword = () => {
                     {/* Form */}
                     <form className="flex flex-col gap-3 w-full" onSubmit={handleSubmit(onSubmit)}>
                         {/* New Password Field */}
-                        <div className="relative">
-                            <span className="absolute cursor-pointer hover:bg-blue-900 bg-orange-600 w-[55px] h-[40px] rounded-[8px]"></span>
+                        <div className="relative w-full sm:w-[450px] lg:w-[500px] mx-auto">
                             <input
                                 type={showPassword ? 'text' : 'password'}
-                                className="rounded-[8px] w-full sm:w-[366px] h-[40px] pl-[4rem] pr-10"
+                                className="rounded-[8px] w-full h-[40px] pl-4 pr-10"
                                 {...register('newPassword')}
                                 placeholder="New Password"
                             />
@@ -98,11 +97,10 @@ const ResetPassword = () => {
                         </div>
 
                         {/* Confirm Password Field */}
-                        <div className="relative">
-                            <span className="absolute cursor-pointer hover:bg-blue-900 bg-orange-600 w-[55px] h-[40px] rounded-[8px]"></span>
+                        <div className="relative w-full sm:w-[450px] lg:w-[500px] mx-auto">
                             <input
                                 type={showConfirmPassword ? 'text' : 'password'}
-                                className="rounded-[8px] w-full sm:w-[366px] h-[40px] pl-[4rem] pr-10"
+                                className="rounded-[8px] w-full h-[40px] pl-4 pr-10"
                                 {...register('confirmPassword')}
                                 placeholder="Confirm Password"
                             />
@@ -117,21 +115,21 @@ const ResetPassword = () => {
 
                         {/* Submit Button */}
                         <div className="flex justify-center items-center mt-2">
-                            <button type="submit" className="w-full sm:w-[157px] h-[40px] hover:bg-blue-600 bg-orange-600 text-white p-2 rounded">
+                            <button type="submit" className="w-full sm:w-[157px] lg:w-[200px] h-[40px] hover:bg-blue-600 bg-orange-600 text-white p-2 rounded">
                                 Reset Password
                             </button>
                         </div>
                     </form>
 
                     {/* Navigation Links */}
-                    <div className="relative left-[10rem] text-white flex flex-col items-end justify-end gap-1 cursor-pointer">
-                        <p className='text-gray-500'>
-                            Remembered your password?- 
-                            <span className='text-orange-500 font-semibold underline' onClick={() => navigate('/login')}>Log In</span>
+                    <div className="flex flex-col items-end gap-1 text-white mt-4 w-full">
+                        <p className='text-gray-500 text-center sm:text-right'>
+                            Remembered your password? 
+                            <span className='text-orange-500 font-semibold underline cursor-pointer' onClick={() => navigate('/login')}>Log In</span>
                         </p>
-                        <p className='text-gray-500'>
-                            No account yet?- 
-                            <span className='text-orange-500 font-semibold underline' onClick={() => navigate('/signup')}>Register here</span>
+                        <p className='text-gray-500 text-center sm:text-right'>
+                            No account yet? 
+                            <span className='text-orange-500 font-semibold underline cursor-pointer' onClick={() => navigate('/signup')}>Register here</span>
                         </p>
                     </div>
                 </div>
